@@ -9,7 +9,7 @@ router.get(`/:id`, async (req, res, next) => {
         // console.log(foundPost)
         console.log(`[${new Date().toLocaleTimeString()}] - Post ID ${req.params.id} was displayed`)
         // res.status(200).json(foundPost)
-        res.status(200).json({ message: `${req.params.id}`} )
+        res.status(200).json({ message: `Here is post ID ${req.params.id}`} )
     }
     catch(err) {
         console.error(err)
