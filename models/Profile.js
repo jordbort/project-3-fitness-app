@@ -2,7 +2,10 @@ const mongoose = require('mongoose')
 
 const profileSchema = new mongoose.Schema(
     {
-        // data goes here
+        name: {type: String, required: true},
+        bio: String,
+        age: Number,
+        location: String
     },
     { timestamps: true }
 )

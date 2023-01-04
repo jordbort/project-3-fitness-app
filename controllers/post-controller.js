@@ -34,7 +34,8 @@ router.post(`/create`, async (req, res) => {
     try {
         // const newPost = await Post.create(req.body)
         // console.log(`Added:`, newPost.name)
-        console.log(req.body, `[${new Date().toLocaleTimeString()}] - "Created" a "post"`)
+        console.log(req.body)
+        console.log(`[${new Date().toLocaleTimeString()}] - "Created" a "post"`)
         // res.status(201).json(newPost)
         res.status(201).json({message: `You 'created' a post!`})
     }
