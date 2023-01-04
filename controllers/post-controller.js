@@ -22,11 +22,24 @@ router.get(`/:id`, async (req, res, next) => {
 router.get(`/`, async (req, res, next) => {
     try {
         console.log(`[${new Date().toLocaleTimeString()}] - Accessed the post creation page`)
-        res.status(200).json({ message: `This is the post creation page`} )
+        res.status(200).json({message: `This is the post creation page`})
     }
     catch(err) {
         console.error(err)
         return next(err)
+    }
+})
+
+router.post(`/create`, async (req, res) => {
+    try {
+        // const newPost = await Post.create(req.body)
+        // console.log(`Added:`, newPost.name)
+        console.log(req.body, `[${new Date().toLocaleTimeString()}] - "Created" a "post"`)
+        // res.status(201).json(newPost)
+        res.status(201).json({message: `You 'created' a post!`})
+    }
+    catch(err) {
+        res.status(400).json({error: err.message})
     }
 })
 
