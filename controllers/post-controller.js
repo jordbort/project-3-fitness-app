@@ -3,13 +3,13 @@ const router = express.Router()
 router.use(express.json())
 
 // Models
-const {Post} = require(`../models`)
+const { Post } = require(`../models`)
 
 router.get(`/:id`, async (req, res, next) => {
     try {
         const foundPost = await Post.findById(req.params.id)
         console.log(foundPost)
-        console.log(`[${new Date().toLocaleTimeString()}] - Showed post ID ${req.params.id}`)
+        console.log(`[${new Date().toLocaleTimeString()}] - Showed post: "${foundPost.text}"`)
         res.status(200).json(foundPost)
         // res.status(200).json({message: `Here is post ID ${req.params.id}`})
     }
@@ -36,7 +36,6 @@ router.post(`/`, async (req, res) => {
         console.log(`Added:`, newPost.text)
         // console.log(req.body)
         console.log(`[${new Date().toLocaleTimeString()}] - Created the above post`)
-        // res.status(201).json(newPost)
         res.status(201).json(newPost)
     }
     catch(err) {
@@ -54,7 +53,7 @@ router.put(`/:id`, async (req, res) => {
         res.status(200).json(updatedPost) 
     }
     catch(err) {
-        res.status(400).json(updatedPost)
+        res.status(400).json({error: err.message})
     }
 })
 
