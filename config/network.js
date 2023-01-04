@@ -28,5 +28,9 @@ if(nets.en0) {
     console.log("Connection detected: Natalie's MacBook wifi")
     network = nets.en0[0].address
 }
+if(nets.en0) {
+    console.log("Connection detected: Mary's MacBook wifi")
+    network = nets.en0[3].address
+}
 
 module.exports = network
