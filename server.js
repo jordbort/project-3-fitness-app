@@ -44,5 +44,5 @@ app.get(`*`, (req, res, next) => {
 
 // server listening "footer"
 app.listen(PORT, () => {
-    console.log(`[${new Date().toLocaleTimeString()}] - Listening for client requests @ ${`${network}` === `${networkInterfaces()}` ? `http://localhost` : `${network}`}:${PORT}`)
+    console.log(`[${new Date().toLocaleTimeString()}] - Listening for client requests @ http://${`${network}` === `${networkInterfaces()}` ? `localhost` : `${network}`}:${PORT}`)
 })
