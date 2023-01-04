@@ -3,7 +3,6 @@ let nets = networkInterfaces()
 let network = nets
 // console.log(nets)
 
-// Devices arranged from most likely to least likely to be using, then from least ideal to most ideal connection
 if(nets.en0) {
     if(nets.en0[0]) {
         if(nets.en0[0].address) {

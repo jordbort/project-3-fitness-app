@@ -24,9 +24,9 @@ app.get(`/error`, (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-    console.error(`🚨 *** Inside middleware! *** 🚨`)
+    console.error(`🚨 *** Inside error-handling middleware! *** 🚨`)
     if(err) {
-        console.error(`Request:`, req)
+        console.log(`Request:`, req)
         console.error(err.message)
         return res.status(404).send(err.message)
     }
@@ -34,8 +34,8 @@ app.use((err, req, res, next) => {
 })
 
 app.get(`*`, (req, res, next) => {
-    if(req.errored){
-        res.status(404).send(`Error: ${req.errored.message}`)
+    if(req.err) {
+        res.status(404).send(`Error: ${req.err.message}`)
     }
     // else { // is this a bad idea? I tried browsing on my local IP and kept getting redirected to /error/
     //     res.redirect(`/error/`)
