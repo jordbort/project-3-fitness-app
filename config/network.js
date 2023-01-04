@@ -4,11 +4,19 @@ let network = nets
 // console.log(nets)
 
 // Devices arranged from most likely to least likely to be using, then from least ideal to most ideal connection
-if(nets.en0) {
+if(nets.en0[1]) {
     console.log("Connection detected: Jordan's MacBook wifi")
     network = nets.en0[1].address
 }
-if(nets.en4) {
+if(nets.en0[0]) {
+    console.log("Connection detected: Natalie's MacBook wifi")
+    network = nets.en0[0].address
+}
+if(nets.en0[3]) {
+    console.log("Connection detected: Mary's MacBook wifi")
+    network = nets.en0[3].address
+}
+if(nets.en4[1]) {
     console.log("Connection detected: Jordan's MacBook ethernet")
     network = nets.en4[1].address
 }
@@ -23,14 +31,6 @@ if(nets.enx000ec677bfae) {
 if(nets.Ethernet) {
     console.log("Connection detected: Jordan's Windows desktop ethernet")
     network = nets.Ethernet[1].address
-}
-if(nets.en0) {
-    console.log("Connection detected: Natalie's MacBook wifi")
-    network = nets.en0[0].address
-}
-if(nets.en0) {
-    console.log("Connection detected: Mary's MacBook wifi")
-    network = nets.en0[3].address
 }
 
 module.exports = network
