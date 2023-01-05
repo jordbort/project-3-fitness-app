@@ -24,10 +24,9 @@ app.use(`/profile`, profileController)
 
 app.get(`/`, async (req, res, next) => {
     try {
-        // const allPosts = await Post.find({})
+        const allPosts = await Post.find({})
         console.log(`[${new Date().toLocaleTimeString()}] - Accessed the home page`)
-        // res.status(200).json(allPosts)
-        res.status(200).json({ message: `Welcome to the home page (feed of posts)`} )
+        res.status(200).json(allPosts)
     }
     catch(err) {
         console.error(err)
