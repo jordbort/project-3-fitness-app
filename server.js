@@ -22,6 +22,8 @@ app.use(`/post`, postController)
 const profileController = require(`./controllers/profile-controller`)
 app.use(`/profile`, profileController)
 
+const { Post } = require(`./models`)
+
 app.get(`/`, async (req, res, next) => {
     try {
         const allPosts = await Post.find({})
