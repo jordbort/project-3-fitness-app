@@ -9,7 +9,7 @@ router.get(`/:id`, async (req, res, next) => {
     try {
         const foundPost = await Post.findById(req.params.id)
         console.log(foundPost)
-        console.log(`[${new Date().toLocaleTimeString()}] - Showed post: "${foundPost.text}"`)
+        console.log(`[${new Date().toLocaleTimeString()}] - Showed post: "${foundPost.description}"`)
         res.status(200).json(foundPost)
         // res.status(200).json({message: `Here is post ID ${req.params.id}`})
     }
@@ -33,10 +33,10 @@ router.get(`/`, async (req, res, next) => {
 router.post(`/`, async (req, res) => {
     try {
         const newPost = await Post.create(req.body)
-        console.log(`Added:`, newPost.text)
+        console.log(`Added:`, newPost.description)
         // console.log(req.body)
         console.log(`[${new Date().toLocaleTimeString()}] - Created the above post`)
-        res.status(201).json(newPost)
+        res.status(201).redirect(`/`)
     }
     catch(err) {
         res.status(400).json({error: err.message})
@@ -60,7 +60,7 @@ router.put(`/:id`, async (req, res) => {
 router.delete(`/:id`, async (req, res) => {
     try {
         const deletedPost = await Post.findByIdAndDelete(req.params.id)
-        console.log(`Deleted:`, deletedPost.text)
+        console.log(`Deleted:`, deletedPost.description)
         console.log(`[${new Date().toLocaleTimeString()}] - "Deleted" post ID ${req.params.id}`)
         res.status(200).json(deletedPost)
     }
