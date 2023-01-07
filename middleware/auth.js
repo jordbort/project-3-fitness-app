@@ -1,6 +1,5 @@
-///////////////////////////////
+
 // DEPENDENCIES
-////////////////////////////////
 
 const passport = require('passport')
 const bcrypt = require('bcrypt')
@@ -10,9 +9,7 @@ const { Strategy, ExtractJwt } = require('passport-jwt')
 
 const User = require('../models/User')
 
-///////////////////////////////
 // CONFIGURATION
-////////////////////////////////
 
 const secret = process.env.JWT_SECRET || 'yolo unique secrets'
 
@@ -21,9 +18,7 @@ const opts = {
     secretOrKey: secret
 }
 
-///////////////////////////////
 // AUTHENTICATION FUNCTIONALITY
-////////////////////////////////
 
 const verify = async (jwt_payload, done) => {
     try {
@@ -69,5 +64,6 @@ const handleValidateOwnership = (req, document) => {
 
 module.exports = {
     requireToken,
-    createUserToken
+    createUserToken,
+    handleValidateOwnership
 }
