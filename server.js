@@ -27,9 +27,6 @@ const authController = require("./controllers/auth-controller");
 app.use("/auth", authController);
 
 
-
-const { Post } = require(`./models`)
-
 app.get(`/`, async (req, res, next) => {
     try {
         const allPosts = await Post.find({})
