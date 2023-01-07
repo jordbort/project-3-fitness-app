@@ -50,7 +50,7 @@ router.post(`/`, requireToken, async (req, res) => {
 
 router.put(`/:id`, requireToken, async (req, res) => {
     try {
-        handleValidateOwnership(req, await Profile.findById(req.params.id))
+        handleValidateOwnership(req, await Post.findById(req.params.id))
         const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true})
         console.log(`Updated post ID ${req.params.id}:`, updatedPost)
         console.log(`[${new Date().toLocaleTimeString()}] - "Updated" post ID ${req.params.id}`)
@@ -63,7 +63,7 @@ router.put(`/:id`, requireToken, async (req, res) => {
 
 router.delete(`/:id`, requireToken, async (req, res) => {
     try {
-        handleValidateOwnership(req, await Profile.findById(req.params.id))
+        handleValidateOwnership(req, await Post.findById(req.params.id))
         const deletedPost = await Post.findByIdAndDelete(req.params.id)
         console.log(`Deleted:`, deletedPost.text)
         console.log(`[${new Date().toLocaleTimeString()}] - "Deleted" post ID ${req.params.id}`)
