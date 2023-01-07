@@ -10,6 +10,8 @@ app.use(morgan(`dev`))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+const { Post } = require(`./models`)
+
 // Network information
 require(`dotenv`).config()
 const PORT = process.env.PORT || 4000
@@ -21,6 +23,10 @@ const postController = require(`./controllers/post-controller`)
 app.use(`/post`, postController)
 const profileController = require(`./controllers/profile-controller`)
 app.use(`/profile`, profileController)
+const authController = require("./controllers/auth-controller");
+app.use("/auth", authController);
+
+
 
 app.get(`/`, async (req, res, next) => {
     try {
