@@ -5,6 +5,8 @@ router.use(express.json())
 // Models
 const { Post } = require(`../models`)
 
+const { handleValidateOwnership, requireToken } = require("../middleware/auth");
+
 router.get(`/:id`, async (req, res, next) => {
     try {
         const foundPost = await Post.findById(req.params.id)
@@ -30,8 +32,11 @@ router.get(`/`, async (req, res, next) => {
     }
 })
 
-router.post(`/`, async (req, res) => {
+router.post(`/`, requireToken, async (req, res) => {
     try {
+        const owner = req.user._id
+        console.log(owner, req.user)
+        req.body.owner = owner
         const newPost = await Post.create(req.body)
         console.log(`Added:`, newPost.description)
         // console.log(req.body)
@@ -43,13 +48,12 @@ router.post(`/`, async (req, res) => {
     }
 })
 
-router.put(`/:id`, async (req, res) => {
+router.put(`/:id`, requireToken, async (req, res) => {
     try {
+        handleValidateOwnership(req, await Post.findById(req.params.id))
         const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true})
         console.log(`Updated post ID ${req.params.id}:`, updatedPost)
-        // console.log(req.body)
         console.log(`[${new Date().toLocaleTimeString()}] - "Updated" post ID ${req.params.id}`)
-        // res.status(201).json(newPost)
         res.status(200).json(updatedPost) 
     }
     catch(err) {
@@ -57,8 +61,9 @@ router.put(`/:id`, async (req, res) => {
     }
 })
 
-router.delete(`/:id`, async (req, res) => {
+router.delete(`/:id`, requireToken, async (req, res) => {
     try {
+        handleValidateOwnership(req, await Post.findById(req.params.id))
         const deletedPost = await Post.findByIdAndDelete(req.params.id)
         console.log(`Deleted:`, deletedPost.description)
         console.log(`[${new Date().toLocaleTimeString()}] - "Deleted" post ID ${req.params.id}`)
