@@ -5,6 +5,8 @@ router.use(express.json())
 // Models
 const { Profile } = require(`../models`)
 
+const { handleValidateOwnership, requireToken } = require("../middleware/auth");
+
 router.get(`/:id`, async (req, res, next) => {
     try {
         const foundProfile = await Profile.findById(req.params.id).populate('owner').exec()
@@ -12,9 +14,9 @@ router.get(`/:id`, async (req, res, next) => {
         console.log(`[${new Date().toLocaleTimeString()}] - Showed profile of "${foundProfile.name}"`)
         res.status(200).json(foundProfile)
     }
-    catch(err) {
+    catch (err) {
         console.error(err)
-        res.status(404).json({error: err.message})
+        res.status(404).json({ error: err.message })
         return next(err)
     }
 })
@@ -22,47 +24,67 @@ router.get(`/:id`, async (req, res, next) => {
 router.get(`/`, async (req, res, next) => {
     try {
         console.log(`[${new Date().toLocaleTimeString()}] - Accessed the profile creation page (?)`)
-        res.status(200).json({ message: `This is the profile creation page`} )
+        res.status(200).json({ message: `This is the profile creation page` })
     }
-    catch(err) {
+    catch (err) {
         console.error(err)
         return next(err)
     }
 })
 
-router.post(`/`, async (req, res) => {
+router.post(`/`, requireToken, async (req, res) => {
     try {
+        const owner = req.user._id
+        console.log(owner, req.user)
+        req.body.owner = owner
         const newProfile = await Profile.create(req.body)
         console.log(`[${new Date().toLocaleTimeString()}] - Created profile for ${newProfile.name}`)
         res.status(201).json(newProfile)
     }
-    catch(err) {
-        res.status(400).json({error: err.message})
+    catch (err) {
+        res.status(400).json({ error: err.message })
     }
 })
 
-router.put(`/:id`, async (req, res) => {
+router.put(`/:id`, requireToken, async (req, res) => {
     try {
-        const updatedProfile = await Profile.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        handleValidateOwnership(req, await Profile.findById(req.params.id))
+        const updatedProfile = await Profile.findByIdAndUpdate(req.params.id, req.body, { new: true })
         console.log(`Updated profile ID ${req.params.id}:`, updatedProfile)
         console.log(`[${new Date().toLocaleTimeString()}] - Updated profile of "${updatedProfile.name}"`)
-        res.status(200).json(updatedProfile) 
+        res.status(200).json(updatedProfile)
     }
-    catch(err) {
-        res.status(400).json({error: err.message})
+    catch (err) {
+        res.status(400).json({ error: err.message })
     }
 })
 
-router.delete(`/:id`, async (req, res) => {
+router.delete(`/:id`, requireToken, async (req, res) => {
     try {
+        handleValidateOwnership(req, await Profile.findById(req.params.id))
         const deletedProfile = await Profile.findByIdAndDelete(req.params.id)
         console.log(`Deleted:`, deletedProfile.name)
         console.log(`[${new Date().toLocaleTimeString()}] - Deleted profile of "${deletedProfile.name}"`)
         res.status(200).json(deletedProfile)
     }
-    catch(err) {
-        res.status(400).json({error: err.message})
+    catch (err) {
+        res.status(400).json({ error: err.message })
     }
 })
+
+router.get("/logout", requireToken, async (req, res, next) => {
+    try {
+        const currentUser = req.user.username
+        delete req.user
+        res.status(200).json({
+            message: `${currentUser} currently logged out`,
+            isLoggedIn: false,
+            token: "",
+        });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
 
 module.exports = router
