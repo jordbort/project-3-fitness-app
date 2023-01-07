@@ -23,9 +23,8 @@ const postController = require(`./controllers/post-controller`)
 app.use(`/post`, postController)
 const profileController = require(`./controllers/profile-controller`)
 app.use(`/profile`, profileController)
-const authController = require("./controllers/auth-controller");
-app.use("/auth", authController);
-
+const authController = require("./controllers/auth-controller")
+app.use("/auth", authController)
 
 app.get(`/`, async (req, res, next) => {
     try {
