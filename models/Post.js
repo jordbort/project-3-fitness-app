@@ -6,7 +6,12 @@ const postSchema = new mongoose.Schema(
         description: {type: String, required: true},
         tags: [String],
         rating: Number,
-        difficulty: Number
+        difficulty: Number,
+        owner: {
+            type: mongoose.Types.ObjectId,
+            ref: 'User',
+            required: true //This can prove buggy if there is already data in the database and any of those don't have an Object Id.
+        }
     },
     { timestamps: true }
 )
