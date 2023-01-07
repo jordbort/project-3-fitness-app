@@ -22,7 +22,7 @@ router.get(`/:id`, async (req, res, next) => {
 router.get(`/`, async (req, res, next) => {
     try {
         console.log(`[${new Date().toLocaleTimeString()}] - Accessed the profile creation page (?)`)
-        res.status(200).json({ message: `This isthe profile creation page`} )
+        res.status(200).json({ message: `This is the profile creation page`} )
     }
     catch(err) {
         console.error(err)
