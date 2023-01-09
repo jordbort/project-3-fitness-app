@@ -9,7 +9,7 @@ const { handleValidateOwnership, requireToken } = require("../middleware/auth");
 
 router.get(`/:id`, async (req, res, next) => {
     try {
-        const foundPost = await Post.findById(req.params.id)
+        const foundPost = await Post.findById(req.params.id) // .populate (username)
         console.log(foundPost)
         console.log(`[${new Date().toLocaleTimeString()}] - Showed post: "${foundPost.description}"`)
         res.status(200).json(foundPost)
