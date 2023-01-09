@@ -49,7 +49,7 @@ const createUserToken = (req, user) => {
 	        throw error
     }
 
-    return jwt.sign({id: user._id},secret,{expiresIn: 36000 })
+    return jwt.sign({id: user._id},secret,{expiresIn: 36000 })  // potentially add username here
 }
 
 const handleValidateOwnership = (req, document) => {
