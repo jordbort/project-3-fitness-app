@@ -2,15 +2,19 @@ const mongoose = require('mongoose')
 
 const postSchema = new mongoose.Schema(
     {
-        image: {type: String, required: true},
-        description: {type: String, required: true},
+        image: { type: String, required: true },
+        description: { type: String, required: true },
         tags: [String],
         rating: Number,
         difficulty: Number,
-        owner: {
+        ownerID: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
-            required: true //This can prove buggy if there is already data in the database and any of those don't have an Object Id.
+            required: true
+        },
+        ownerName: {
+            type: String
+            // required: true
         }
     },
     { timestamps: true }
