@@ -34,9 +34,6 @@ router.get(`/`, async (req, res, next) => {
 
 router.post(`/`, async (req, res) => {
     try {
-        const owner = req.user._id
-        console.log(owner, req.user)
-        req.body.owner = owner
         const newProfile = await User.create(req.body)
         console.log(`[${new Date().toLocaleTimeString()}] - Created profile for ${newProfile.username}`)
         res.status(201).json(newProfile)
