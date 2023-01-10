@@ -23,8 +23,9 @@ router.get(`/:id`, async (req, res, next) => {
 
 router.get(`/`, async (req, res, next) => {
     try {
-        console.log(`[${new Date().toLocaleTimeString()}] - Redirecting to the home page...`)
-        res.status(302).redirect(`/`)
+        console.log(`[${new Date().toLocaleTimeString()}] - Showing all user profiles...`)
+        const allUsers = await User.find({})
+        res.status(200).json(allUsers)
     }
     catch (err) {
         console.error(err)
