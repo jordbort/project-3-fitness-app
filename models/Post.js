@@ -7,7 +7,7 @@ const postSchema = new mongoose.Schema(
         tags: [String],
         rating: Number,
         difficulty: Number,
-        ownerID: {
+        owner: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
             required: true
