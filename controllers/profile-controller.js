@@ -36,7 +36,7 @@ router.post(`/`, async (req, res) => {
     try {
         const newProfile = await User.create(req.body)
         console.log(`[${new Date().toLocaleTimeString()}] - Created profile for ${newProfile.username}`)
-        res.status(201).json(newProfile)
+        res.status(201).redirect(`/`)
     }
     catch (err) {
         res.status(400).json({ error: err.message })
