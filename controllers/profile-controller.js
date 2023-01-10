@@ -5,7 +5,7 @@ router.use(express.json())
 // Models
 const { User } = require(`../models`)
 
-const { handleValidateOwnership, requireToken } = require("../middleware/auth");
+const { handleValidateOwnership, requireToken } = require("../middleware/auth")
 
 router.get(`/:id`, async (req, res, next) => {
     try {
@@ -32,7 +32,7 @@ router.get(`/`, async (req, res, next) => {
     }
 })
 
-router.post(`/`, requireToken, async (req, res) => {
+router.post(`/`, async (req, res) => {
     try {
         const owner = req.user._id
         console.log(owner, req.user)
@@ -72,19 +72,19 @@ router.delete(`/:id`, requireToken, async (req, res) => {
     }
 })
 
-// router.get("/logout", requireToken, async (req, res, next) => {
-//     try {
-//         const currentUser = req.user.username
-//         delete req.user
-//         res.status(200).json({
-//             message: `${currentUser} currently logged out`,
-//             isLoggedIn: false,
-//             token: "",
-//         });
-//     } catch (err) {
-//         res.status(400).json({ error: err.message });
-//     }
-// });
+router.get("/logout", requireToken, async (req, res, next) => {
+    try {
+        const currentUser = req.user.username
+        delete req.user
+        res.status(200).json({
+            message: `${currentUser} currently logged out`,
+            isLoggedIn: false,
+            token: "",
+        })
+    } catch (err) {
+        res.status(400).json({ error: err.message })
+    }
+})
 
 
 module.exports = router
