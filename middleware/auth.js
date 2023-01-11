@@ -65,7 +65,6 @@ const handleValidateOwnership = (req, document) => {
     }
 }
 
-
 module.exports = {
     requireToken,
     createUserToken,
